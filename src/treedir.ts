@@ -100,7 +100,7 @@ export abstract class TreeEntry {
     this.basename = basename(this.path);
   }
 
-  abstract toJson(): any;
+  abstract toJson(opts: { includeStatus: boolean }): any;
 
   isDirectory(): this is TreeDir {
     return this instanceof TreeDir;
@@ -166,7 +166,7 @@ export class TreeFile extends TreeEntry {
     return file;
   }
 
-  toJson(): any {
+  toJson(opts: { includeStatus: boolean }): any {
     if (!this.parent && this.path) {
       throw new Error('parent has no path');
     } else if (this.parent && !this.path) {
@@ -185,6 +185,9 @@ export class TreeFile extends TreeEntry {
         birthtime: this.stats.birthtime.getTime(),
       },
     };
+    if (opts.includeStatus) {
+      output.status = this.status;
+    }
     return output;
   }
 
@@ -309,7 +312,7 @@ export class TreeDir extends TreeEntry {
     return privateMerge(source, target.clone()) as TreeDir;
   }
 
-  toJson(): any {
+  toJson(opts: { includeStatus: boolean }): any {
     if (!this.parent && this.path) {
       throw new Error('parent has no path');
     } else if (this.parent && (!this.path || this.path.length === 0)) {
@@ -317,7 +320,7 @@ export class TreeDir extends TreeEntry {
       throw new Error('item must have path');
     }
 
-    const children: any = this.children.map((value: TreeEntry) => value.toJson());
+    const children: any = this.children.map((value: TreeEntry) => value.toJson(opts));
 
     const stats: any = {
       size: this.stats.size,

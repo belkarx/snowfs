@@ -199,7 +199,7 @@ export class Odb {
   }
 
   writeCommit(commit: Commit): Promise<void> {
-    const json = commit.toJson();
+    const json = commit.toJson({ includeStatus: false });
     return fse.writeJson(join(this.repo.options.commondir, 'versions',  commit.hash), json);
   }
 

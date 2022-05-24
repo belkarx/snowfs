@@ -126,9 +126,9 @@ export class Commit {
     return this.repo;
   }
 
-  toJson(): any {
+  toJson(opts: { includeStatus: boolean }): any {
     const parent = this.parent ? this.parent : null;
-    const root = this.root.toJson();
+    const root = this.root.toJson(opts);
     const tags = this.tags?.length > 0 ? this.tags : undefined;
     // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
     const userData = this.userData && Object.keys(this.userData).length > 0 ? this.userData : undefined;
