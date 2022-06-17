@@ -372,7 +372,7 @@ jobs:
     #   make release
 
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
 
   finish:
     needs: [macos, windows, linux, analyze]
