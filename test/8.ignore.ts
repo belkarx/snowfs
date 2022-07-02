@@ -370,7 +370,7 @@ test('Ignore Manager [foo/bar[1-4]]', (t) => {
   testIgnore(t, pattern, ignored, unignored);
 });
 
-test.only('Ignore Manager test default ignore', (t) => {
+test('Ignore Manager test default ignore', (t) => {
   const ignored = [
     'test.blend1',
     'foo/test.blend1',
